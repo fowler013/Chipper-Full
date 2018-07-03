@@ -5,13 +5,20 @@ class ChirpInfo extends Component {
         super(props);
 
         this.state = {
-            chirp: ''
+            chirpUser: '',
+            chirpText:''
         };
     }
 
-    handleInputChange(chirp) {
-        this.setState({ chirp })
+    handleInputChange(chirpUser) {
+        this.setState({ chirpUser })
     };
+
+    handleInputChange2(chirpText) {
+        this.setState({ chirpText })
+    };
+
+    
 
     render() {
         return (
@@ -22,13 +29,13 @@ class ChirpInfo extends Component {
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
-                        <input value={this.state.chirp} onChange={(event) => { this.handleInputChange(event.target.value) }}  id="name" type="text" name="name" class="form-control float" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+                        <input value={this.state.chirpUser} onChange={(event) => { this.handleInputChange(event.target.value) }}  id="name" type="text" name="name" class="form-control float" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
                     </div>
                     <div>
-                        <textarea value={this.state.chirp} onChange={(event) => { this.handleInputChange(event.target.value) }} id="text" class="form-input float" type="text" name="message" placeholder="text"></textarea>
+                        <textarea value={this.state.chirpText} onChange={(event) => { this.handleInputChange2(event.target.value) }} id="text" class="form-input float" type="text" name="message" placeholder="text"></textarea>
                     </div>
                     <div>
-                        <input onClick={() => { this.props.postChirp(this.state.chirp) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
+                        <input onClick={() => { this.props.postChirp(this.state.chirpText) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
                     </div>
                 </div>
                 <div class="row p-3" id="box">

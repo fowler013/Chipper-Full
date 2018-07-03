@@ -12,6 +12,7 @@ app.use(morgan('dev'));
 app.use(express.static(CLIENT_PATH)) // express is going to look in the client folde for a file called//
 app.use(express.json()); // this is a  API server to allow users to interact with GEY POST PUT DELETE//
 
+app.use(express.urlencoded({ extended: false}));
 app.use('/api', routes) // pass /api through routes//
 
 app.use(stateRouting); //this is the middleware routing// //I NEED THIS IN MY FILE//

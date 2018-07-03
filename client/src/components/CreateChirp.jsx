@@ -16,9 +16,7 @@ class CreateChirp extends Component {
 
         this.state = {
             chirps: [
-                { text: 'FIRST TWEE-- ERR, I MEAN CHIRP!', id: 0 },
-                { text: 'SECOND CHIRP OMG', id: 1 },
-                { text: 'SUCH CHIRP! MUCH WOW!', id: 2 },
+                ,
             ]
         };
     }
@@ -28,50 +26,46 @@ class CreateChirp extends Component {
     }
 
     getChirps() {
-        fetch('/api/chirps/')
-            .then((response) => {
-                return response.json();
-            }).then((chirps) => {
-                let keys = Object.keys(chirps);
-                let chirpsArray = [];
-
-                for (let key of keys) {
-                    if (key !== 'nextid') {
-                        chirpsArray.push({
-                            text: chirps[key].text,
-                            id: key
-                        });
-                    }
-                }
-
-                this.setState({
-                    chirps: chirpsArray
-                });
-            }).catch((err) => {
-                //console.log(err);
+        fetch("http://localhost:3000/api/chirps")
+        .then(function (data) {
+            console.log(data)
+            // this is a test//
+            let indexs = Object.keys(data);
+            console.log(indexs);
+            let info = Object.values(data);
+            console.log(info);
+            info.forEach(element => {
+              console.log(element)
+              console.log(indexs[info.indexOf(element)])
+              if (!isNaN(indexs[info.indexOf(element)])) {
+                createChirp(indexs[info.indexOf(element)], element)
+              }
+        
+        
             });
+        
+        
+        
+          });
     }
 
-    addChirp(text) {
-        fetch('/api/chirps/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                text
-            })
-        }).then(() => {
-            this.getChirps();
-        }).catch((err) => {
-            //console.log(err);
-        });
+    addChirp(chirps) {
+        fetch("http://localhost:3000/api/chirps", {
+            method: "POST",
+            data: JSON.stringify(chirps),
+            contentType: 'application/json',
+            dataType: "json",
+            success: (result) => {
+              console.log(result)
+              createChirp(result, chirps)
+            }
+        })
     }
 
     render() {
         return (
             <div className="box">
-                <ChirpInfo postChirp={(text) => { this.addChirp(text); }} />
+                <ChirpInfo postChirp={(chirps) => { this.addChirp(chirps); }} />
                 <List chirps={this.state.chirps} />
             </div>
         );

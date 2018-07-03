@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 class Goodbye extends Component {
     render() {
-        return <h1>Goodbye World!</h1>;
+        return <h1>Goodbye</h1>;
     }
 }
 
