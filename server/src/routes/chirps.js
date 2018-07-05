@@ -16,6 +16,7 @@ router.get('/:id?', (req, res)=> {
 });
 // THIS WILL POST ANY CREATED CHIRPS//
 router.post('/', (req,res) => {
+    console.log(req.body);
     let test = req.body
     res.json(chirpsStore.CreateChirp(test))
     

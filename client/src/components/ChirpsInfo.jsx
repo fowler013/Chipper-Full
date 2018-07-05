@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 class ChirpInfo extends Component {
     constructor(props) {
@@ -6,8 +6,33 @@ class ChirpInfo extends Component {
 
         this.state = {
             chirpUser: '',
-            chirpText:''
+            chirpText: ''
         };
+    }
+
+    componentDidMount() {
+        this.getChirps();
+    }
+
+    getChirps() {
+
+        fetch("http://localhost:3000/api/chirps")
+        .then((res)=> res.json())
+        .then((data) =>  {
+            console.log(data)
+            // this is a test//
+            let indexs = Object.keys(data);
+            let info = Object.values(data);
+            console.log(indexs,info);
+            // info.forEach(element => {
+            //   if (!isNaN(indexs[info.indexOf(element)])) {
+            //     createChirp(indexs[info.indexOf(element)], element)
+            //   }
+            // });
+        
+        
+        
+          });
     }
 
     handleInputChange(chirpUser) {
@@ -18,24 +43,41 @@ class ChirpInfo extends Component {
         this.setState({ chirpText })
     };
 
+    addChirp(a,b) {
+        console.log({a,b})
+        // console.log(chirps)
+        // fetch("http://localhost:3000/api/chirps", {
+        //     method: "POST",
+        //     data: JSON.stringify(chirps),
+        //     contentType: 'application/json',
+        //     dataType: "json",
+        //     success: (result) => {
+        //       console.log(result)
+        //       createChirp(result, chirps)
+        //     }
+        // })
+    }
     
 
     render() {
+        console.log(this.state.chirpUser)
+        console.log(this.state.chirpText)
         return (
-            <form>
+            <Fragment>
+               <form>
                 <div class="text-center bg-info">
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
-                        <input value={this.state.chirpUser} onChange={(event) => { this.handleInputChange(event.target.value) }}  id="name" type="text" name="name" class="form-control float" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+                        <input value={this.state.chirpUser} onChange={(event) => { this.handleInputChange(event.target.value) }} id="name" type="text" name="name" class="form-control float" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
                     </div>
                     <div>
                         <textarea value={this.state.chirpText} onChange={(event) => { this.handleInputChange2(event.target.value) }} id="text" class="form-input float" type="text" name="message" placeholder="text"></textarea>
                     </div>
                     <div>
-                        <input onClick={() => { this.props.postChirp(this.state.chirpText) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
+                        <input onClick={() => { this.addChirp({this.state.chirpUser, this.state.chirpText}) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
                     </div>
                 </div>
                 <div class="row p-3" id="box">
@@ -67,11 +109,13 @@ class ChirpInfo extends Component {
                         </div>
                     </div>
                 </div>
-            </form>
+            </form> 
+            </Fragment>
+            
 
         );
     }
-} 
+}
 
 export default ChirpInfo
 

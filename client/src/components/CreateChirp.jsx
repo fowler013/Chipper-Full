@@ -15,9 +15,10 @@ class CreateChirp extends Component {
         super(props);
 
         this.state = {
-            chirps: [
-                ,
-            ]
+            chirps: {
+                user: '',
+                text: ''
+            }
         };
     }
 
@@ -27,22 +28,18 @@ class CreateChirp extends Component {
 
     getChirps() {
         fetch("http://localhost:3000/api/chirps")
-        .then(function (data) {
+        .then((res)=> res.json())
+        .then((data) =>  {
             console.log(data)
             // this is a test//
             let indexs = Object.keys(data);
-            console.log(indexs);
             let info = Object.values(data);
-            console.log(info);
-            info.forEach(element => {
-              console.log(element)
-              console.log(indexs[info.indexOf(element)])
-              if (!isNaN(indexs[info.indexOf(element)])) {
-                createChirp(indexs[info.indexOf(element)], element)
-              }
-        
-        
-            });
+            console.log(indexs,info);
+            // info.forEach(element => {
+            //   if (!isNaN(indexs[info.indexOf(element)])) {
+            //     createChirp(indexs[info.indexOf(element)], element)
+            //   }
+            // });
         
         
         
@@ -66,7 +63,7 @@ class CreateChirp extends Component {
         return (
             <div className="box">
                 <ChirpInfo postChirp={(chirps) => { this.addChirp(chirps); }} />
-                <List chirps={this.state.chirps} />
+                {/* <List chirps={this.state.chirps} /> */}
             </div>
         );
     }
