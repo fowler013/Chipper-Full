@@ -1,5 +1,6 @@
 const express = require('express')
 const chirpsStore = require('../chirpstore')
+const GetUsersProcedure = require('../db')
 
 
 let router = express.Router();
@@ -7,6 +8,7 @@ let router = express.Router();
 
 router.get('/:id?', (req, res)=> {
     let id = req.params.id
+    GetUsersProcedure.GetUsers()
     if(id) {
         res.json(chirpsStore.GetChirp(id));
     }else{
@@ -26,7 +28,8 @@ router.post('/', (req,res) => {
 // THIS IS MY DELETE ID//
 router.delete('/:id', (req,res) =>{
     let id = req.params.id;
-    
+    console.log(id)
+    GetUsersProcedure.DeleteUser(id)
     chirpsStore.DeleteChirp(id);
     res.sendStatus(200)
     
@@ -36,6 +39,8 @@ router.delete('/:id', (req,res) =>{
 // THIS IS MY UPDATED//
 router.put('/:id?', (req, res) => {
     let id = req.params.id;
+    console.log(id)
+    GetUsersProcedure.UpdateUsers(id)
     chirpsStore.UpdateChirp(id, req.body)
     res.sendStatus(200);
 })

@@ -43,19 +43,26 @@ class ChirpInfo extends Component {
         this.setState({ chirpText })
     };
 
-    addChirp(a,b) {
-        console.log({a,b})
+    addChirp(chirpUser,chirpText) {
+        console.log({chirpUser,chirpText})
         // console.log(chirps)
-        // fetch("http://localhost:3000/api/chirps", {
-        //     method: "POST",
-        //     data: JSON.stringify(chirps),
-        //     contentType: 'application/json',
-        //     dataType: "json",
-        //     success: (result) => {
-        //       console.log(result)
-        //       createChirp(result, chirps)
-        //     }
-        // })
+        fetch("http://localhost:3000/api/chirps", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },body: JSON.stringify({
+                user: chirpUser,
+                text: chirpText,
+              })
+            //data: JSON.stringify({chirpUser,chirpText}),
+            //contentType: 'application/json',
+            // dataType: "json",
+            // success: (result) => {
+            //   console.log(result)
+            //   createChirp(result, {chirpUser,chirpText})
+            // }
+        })
     }
     
 
@@ -77,7 +84,7 @@ class ChirpInfo extends Component {
                         <textarea value={this.state.chirpText} onChange={(event) => { this.handleInputChange2(event.target.value) }} id="text" class="form-input float" type="text" name="message" placeholder="text"></textarea>
                     </div>
                     <div>
-                        <input onClick={() => { this.addChirp({this.state.chirpUser, this.state.chirpText}) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
+                        <input onClick={() => { this.addChirp(this.state.chirpUser, this.state.chirpText) }} id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp" name="btn" />
                     </div>
                 </div>
                 <div class="row p-3" id="box">
